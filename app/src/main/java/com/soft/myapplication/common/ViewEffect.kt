@@ -5,4 +5,4 @@ package com.soft.myapplication.common
 // 1. Show snack bar
 // 2. show dialog
 // 3. navigate to fragment and etc...
-interface ViewAction
+interface ViewEffect

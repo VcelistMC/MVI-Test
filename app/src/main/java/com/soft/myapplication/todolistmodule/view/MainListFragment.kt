@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.soft.myapplication.R
@@ -14,12 +13,12 @@ import com.soft.myapplication.common.BaseFragment
 import com.soft.myapplication.todolistmodule.adapter.MainListAdapter
 import com.soft.myapplication.todolistmodule.intent.MainListIntent
 import com.soft.myapplication.todolistmodule.states.MainViewState
-import com.soft.myapplication.todolistmodule.viewaction.MainViewAction
+import com.soft.myapplication.todolistmodule.viewaction.MainViewEffect
 import com.soft.myapplication.todolistmodule.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main_list.*
 
 
-class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewAction, MainListIntent>() {
+class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffect, MainListIntent>() {
 
     lateinit var adapter: MainListAdapter
 
@@ -101,13 +100,13 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewActi
         }
     }
 
-    override fun renderViewAction(action: MainViewAction) {
+    override fun renderViewAction(action: MainViewEffect) {
         when(action){
-            is MainViewAction.ShowSnackBar -> {
+            is MainViewEffect.ShowSnackBar -> {
                 Snackbar.make(requireView(), action.msg, Snackbar.LENGTH_LONG).show()
             }
 
-            is MainViewAction.ShowToast -> {
+            is MainViewEffect.ShowToast -> {
                 Toast.makeText(requireContext(), action.msg, Toast.LENGTH_LONG).show()
             }
         }

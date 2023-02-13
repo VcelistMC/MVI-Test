@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import java.lang.reflect.ParameterizedType
 
-open class BaseActivity<VM: BaseViewModel<ViewState, ViewAction, ViewIntent>>: AppCompatActivity() {
+open class BaseActivity<VM: BaseViewModel<ViewState, ViewEffect, ViewIntent>>: AppCompatActivity() {
     lateinit var viewModel: VM
 
     @Suppress("UNCHECKED_CAST")

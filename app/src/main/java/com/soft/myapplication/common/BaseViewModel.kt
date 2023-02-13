@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-abstract class BaseViewModel<VS: ViewState, A: ViewAction, I: ViewIntent>(application: Application) : AndroidViewModel(application) {
+abstract class BaseViewModel<VS: ViewState, A: ViewEffect, I: ViewIntent>(application: Application) : AndroidViewModel(application) {
     protected var _state = MutableLiveData<VS>()
     val stateLiveData: LiveData<VS>
         get() = _state

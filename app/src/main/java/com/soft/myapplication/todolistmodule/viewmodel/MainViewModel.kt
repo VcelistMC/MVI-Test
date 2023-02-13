@@ -6,13 +6,12 @@ import com.soft.myapplication.common.BaseViewModel
 import com.soft.myapplication.todolistmodule.intent.MainListIntent
 import com.soft.myapplication.todolistmodule.model.TodoItem
 import com.soft.myapplication.todolistmodule.states.MainViewState
-import com.soft.myapplication.todolistmodule.viewaction.MainViewAction
+import com.soft.myapplication.todolistmodule.viewaction.MainViewEffect
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class MainViewModel(application: Application) : BaseViewModel<MainViewState, MainViewAction, MainListIntent>(application) {
+class MainViewModel(application: Application) : BaseViewModel<MainViewState, MainViewEffect, MainListIntent>(application) {
     private val todos = mutableListOf(TodoItem.mock1, TodoItem.mock2, TodoItem.mock3)
 
     fun addItem(todoItem: TodoItem){
@@ -64,7 +63,7 @@ class MainViewModel(application: Application) : BaseViewModel<MainViewState, Mai
                 val newTask = TodoItem(intent.newTask)
                 addItem(newTask)
                 getTodos()
-                postAction(MainViewAction.ShowSnackBar("Task added :)"))
+                postAction(MainViewEffect.ShowSnackBar("Task added :)"))
             }
 
             is MainListIntent.FetchAllTodos -> {

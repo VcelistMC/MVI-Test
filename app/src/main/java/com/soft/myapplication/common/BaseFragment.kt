@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import java.lang.reflect.ParameterizedType
 
-open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewAction, VI: ViewIntent>: Fragment(), OnFragmentCreated {
+open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewEffect, VI: ViewIntent>: Fragment(), OnFragmentCreated {
     lateinit var viewModel: VM
 
     @Suppress("UNCHECKED_CAST")
@@ -41,9 +41,9 @@ open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewAc
 
 
     @Suppress("UNCHECKED_CAST")
-    val baseActivity: BaseActivity<BaseViewModel<ViewState, ViewAction, ViewIntent>>
+    val baseActivity: BaseActivity<BaseViewModel<ViewState, ViewEffect, ViewIntent>>
     get(){
-        return activity as BaseActivity<BaseViewModel<ViewState, ViewAction, ViewIntent>>
+        return activity as BaseActivity<BaseViewModel<ViewState, ViewEffect, ViewIntent>>
     }
 
     val container: Int
