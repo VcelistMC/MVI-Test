@@ -15,6 +15,7 @@ abstract class BaseViewModel<VS: ViewState, A: ViewAction, I: ViewIntent>(applic
         get() = _action
 
 
+    // This method is responsible for handling intents that are sent from the BaseFragment.dispatchIntent method
     abstract fun handleIntent(intent: I)
 
     fun postState(state: VS){

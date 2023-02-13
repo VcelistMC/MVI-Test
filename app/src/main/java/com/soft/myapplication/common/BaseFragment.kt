@@ -59,6 +59,7 @@ open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewAc
             ?.commit()
     }
 
+    // We call this method when we want to send an intent for the viewmodel to handle
     fun dispatchIntent(intent: VI){
         viewModel.handleIntent(intent)
     }
