@@ -64,12 +64,13 @@ class MainViewModel(application: Application) : BaseViewModel<MainViewState, Mai
                 val newTask = TodoItem(intent.newTask)
                 addItem(newTask)
                 getTodos()
+                postAction(MainViewAction.ShowSnackBar("Task added :)"))
+            }
+
+            is MainListIntent.FetchAllTodos -> {
+                getTodos()
             }
         }
-    }
-
-    override fun initState() {
-        postState(MainViewState.TodoItems(todos))
     }
 
 

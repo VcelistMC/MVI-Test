@@ -16,7 +16,6 @@ abstract class BaseViewModel<VS: ViewState, A: ViewAction, I: ViewIntent>(applic
 
 
     abstract fun handleIntent(intent: I)
-    abstract fun initState()
 
     fun postState(state: VS){
         _state.postValue(state)

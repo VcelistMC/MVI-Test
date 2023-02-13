@@ -34,7 +34,8 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewActi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTodos()
+//        viewModel.getTodos()
+        dispatchIntent(MainListIntent.FetchAllTodos)
     }
     override fun initRecycler() {
         listRv.layoutManager = LinearLayoutManager(requireContext())

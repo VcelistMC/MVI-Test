@@ -6,4 +6,6 @@ sealed class MainListIntent: ViewIntent{
     data class AddTaskPressed(val newTask: String): MainListIntent()
     data class SearchTask(val query: String): MainListIntent()
     object ClearSearch: MainListIntent()
+
+    object FetchAllTodos: MainListIntent()
 }
