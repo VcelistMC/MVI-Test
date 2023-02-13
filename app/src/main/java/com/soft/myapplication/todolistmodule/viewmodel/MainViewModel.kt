@@ -24,7 +24,7 @@ class MainViewModel(application: Application) : BaseViewModel<MainViewState, Mai
                     postState(MainViewState.Loading)
                 }
                 .catch {
-                    postState(MainViewState.Error(it.message?: "Failed to get data"))
+                    postState(MainViewState.Error(it.message!!))
                 }
                 .collect{ list ->
                     cachedItems = list.map{it.copy()} as MutableList<TodoItem>
