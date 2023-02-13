@@ -13,7 +13,8 @@ class MainListAdapter(
     private var todos: List<TodoItem>
 ): RecyclerView.Adapter<MainListAdapter.TodoItemViewHolder>(){
 
-    class TodoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var deletionListener: ItemActions? = null
+    class TodoItemViewHolder(itemView: View, val listener: ItemActions?) : RecyclerView.ViewHolder(itemView) {
         fun bindItemToView(item: TodoItem){
             itemView.isCompletedCB.isChecked = item.isCompleted
             itemView.todoText.text = item.description
@@ -24,13 +25,25 @@ class MainListAdapter(
                 item.isCompleted = isChecked
             }
         }
+
+        fun listenToDeletion(item: TodoItem){
+            itemView.delete.setOnClickListener {
+                listener?.onItemDeleted(item)
+            }
+        }
+
+        fun listenToEdit(currentItem: TodoItem) {
+            itemView.editBtn.setOnClickListener {
+                listener?.onItemEdited(currentItem)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.todo_list_item, parent, false)
 
-        return TodoItemViewHolder(view)
+        return TodoItemViewHolder(view, deletionListener)
     }
 
     override fun getItemCount() = todos.size
@@ -45,5 +58,12 @@ class MainListAdapter(
 
         holder.bindItemToView(currentItem)
         holder.listenToCheckBox(currentItem)
+        holder.listenToDeletion(currentItem)
+        holder.listenToEdit(currentItem)
     }
+}
+
+interface ItemActions{
+    fun onItemDeleted(deletedItem: TodoItem)
+    fun onItemEdited(itemToEdit: TodoItem)
 }

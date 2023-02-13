@@ -5,22 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.soft.myapplication.R
 import com.soft.myapplication.common.AlertDialogHelper
 import com.soft.myapplication.common.BaseFragment
+import com.soft.myapplication.todolistmodule.adapter.ItemActions
 import com.soft.myapplication.todolistmodule.adapter.MainListAdapter
 import com.soft.myapplication.todolistmodule.intent.MainListIntent
+import com.soft.myapplication.todolistmodule.model.TodoItem
 import com.soft.myapplication.todolistmodule.states.MainViewState
 import com.soft.myapplication.todolistmodule.viewaction.MainViewEffect
 import com.soft.myapplication.todolistmodule.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main_list.*
 
 
-class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffect, MainListIntent>() {
+class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffect, MainListIntent>(),
+    ItemActions {
 
-    lateinit var adapter: MainListAdapter
+    private lateinit var adapter: MainListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,12 +37,13 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dispatchIntent(MainListIntent.FetchAllTodos)
+        dispatchIntent(MainListIntent.FetchAllTasks)
     }
     override fun initRecycler() {
         listRv.layoutManager = LinearLayoutManager(requireContext())
         adapter = MainListAdapter(emptyList())
         listRv.adapter = adapter
+        adapter.deletionListener = this
     }
 
 
@@ -59,15 +64,18 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffe
         searchBtn.setOnClickListener {
             dispatchIntent(MainListIntent.SearchTask(search_et.text.toString()))
         }
+        search_et.doOnTextChanged { text, _, _, _ ->
+            if(text.isNullOrBlank() || text.isEmpty()){
+                dispatchIntent(MainListIntent.FetchAllTasks)
+            }
+        }
     }
 
     private fun listenToAddTaskBtn() {
         addTaskBtn.setOnClickListener {
-            AlertDialogHelper.showInputDialog(requireContext(), "Add Task"){
-                dispatchIntent(
-                    MainListIntent.AddTaskPressed(it)
-                )
-            }
+            dispatchIntent(
+                MainListIntent.AddTaskPressed
+            )
         }
     }
 
@@ -110,12 +118,35 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffe
             is MainViewEffect.ShowToast -> {
                 Toast.makeText(requireContext(), effect.msg, Toast.LENGTH_LONG).show()
             }
+
+            is MainViewEffect.ShowAddDialog -> {
+                AlertDialogHelper.showInputDialog(requireContext(), "Add task"){
+                    dispatchIntent(
+                        MainListIntent.NewTaskAdded(it)
+                    )
+                }
+            }
+
+            is MainViewEffect.ShowEditDialog -> {
+                AlertDialogHelper.showInputDialog(requireContext(), "Edit task"){
+                    val newTask = effect.itemToEdit.copy(description = it)
+                    dispatchIntent(MainListIntent.TaskEdited(effect.itemToEdit, newTask))
+                }
+            }
         }
     }
 
 
     companion object {
         fun create() = MainListFragment()
+    }
+
+    override fun onItemDeleted(deletedItem: TodoItem) {
+        dispatchIntent(MainListIntent.TaskDeleted(deletedItem))
+    }
+
+    override fun onItemEdited(itemToEdit: TodoItem) {
+        dispatchIntent(MainListIntent.EditTaskPressed(itemToEdit))
     }
 
 }

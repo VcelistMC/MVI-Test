@@ -22,7 +22,7 @@ abstract class BaseViewModel<VS: ViewState, A: ViewEffect, I: ViewIntent>(applic
         _state.postValue(state)
     }
 
-    fun postAction(effect: A){
+    fun postEffect(effect: A){
         _effect.postValue(effect)
     }
 
