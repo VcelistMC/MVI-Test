@@ -50,6 +50,7 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffe
 
     private fun listenToClearBtn() {
         clearBtn.setOnClickListener {
+            search_et.setText("")
             dispatchIntent(MainListIntent.ClearSearch)
         }
     }
