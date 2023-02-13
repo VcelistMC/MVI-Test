@@ -10,9 +10,9 @@ abstract class BaseViewModel<VS: ViewState, A: ViewEffect, I: ViewIntent>(applic
     val stateLiveData: LiveData<VS>
         get() = _state
 
-    protected var _action = MutableLiveData<A>()
-    val actionLiveData: LiveData<A>
-        get() = _action
+    protected var _effect = MutableLiveData<A>()
+    val effectLiveData: LiveData<A>
+        get() = _effect
 
 
     // This method is responsible for handling intents that are sent from the BaseFragment.dispatchIntent method
@@ -22,8 +22,8 @@ abstract class BaseViewModel<VS: ViewState, A: ViewEffect, I: ViewIntent>(applic
         _state.postValue(state)
     }
 
-    fun postAction(action: A){
-        _action.postValue(action)
+    fun postAction(effect: A){
+        _effect.postValue(effect)
     }
 
 }

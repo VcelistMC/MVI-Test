@@ -33,8 +33,8 @@ open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewEf
             renderViewState(it)
         }
 
-        viewModel.actionLiveData.observe(viewLifecycleOwner){
-            renderViewAction(it)
+        viewModel.effectLiveData.observe(viewLifecycleOwner){
+            renderViewEffect(it)
         }
     }
 
@@ -69,5 +69,5 @@ open class BaseFragment<VM: BaseViewModel<VS, VA, VI>, VS: ViewState, VA: ViewEf
     override fun initListeners() {}
 
     open fun renderViewState(state: VS){}
-    open fun renderViewAction(action: VA){}
+    open fun renderViewEffect(effect: VA){}
 }

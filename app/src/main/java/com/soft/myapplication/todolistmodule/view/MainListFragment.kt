@@ -100,14 +100,14 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewEffe
         }
     }
 
-    override fun renderViewAction(action: MainViewEffect) {
-        when(action){
+    override fun renderViewEffect(effect: MainViewEffect) {
+        when(effect){
             is MainViewEffect.ShowSnackBar -> {
-                Snackbar.make(requireView(), action.msg, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), effect.msg, Snackbar.LENGTH_LONG).show()
             }
 
             is MainViewEffect.ShowToast -> {
-                Toast.makeText(requireContext(), action.msg, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), effect.msg, Toast.LENGTH_LONG).show()
             }
         }
     }
