@@ -56,8 +56,8 @@ class MainListFragment : BaseFragment<MainViewModel, MainViewState, MainViewActi
     }
 
     private fun listenToSearchBar() {
-        search_et.doOnTextChanged { text, _, _, _ ->
-            dispatchIntent(MainListIntent.SearchTask(text.toString()))
+        searchBtn.setOnClickListener {
+            dispatchIntent(MainListIntent.SearchTask(search_et.text.toString()))
         }
     }
 

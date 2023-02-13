@@ -21,6 +21,11 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_notification_clear_all"
             android:id="@+id/clearBtn"/>
+        <ImageButton
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_search"/>
     </LinearLayout>
 
 
@@ -47,6 +52,7 @@
 
     <LinearLayout
         android:id="@+id/error_layout"
+        android:gravity="center"
         android:visibility="gone"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -61,7 +67,8 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/stat_notify_error"/>
         <TextView
-            android:layout_width="match_parent"
+
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/errTv"/>
     </LinearLayout>
